@@ -3,500 +3,570 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facilities Priority Guide</title>
+    <title>Facilities Service Request - University of Melbourne</title>
     <style>
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            width: 100%;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f5f5f5;
             color: #333;
-            padding: 15mm;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
         }
-        
-        .header {
-            text-align: center;
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #004576;
+            padding: 8px;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .quick-access {
+            background: none;
+            border: 1px solid #004576;
+            color: #004576;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .visible {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+
+                textarea, select, input[type="tel"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            height: 3rem;
+            font-size: 1rem;
+        }
+
+        select:disabled,
+        select[readonly],
+        select.readonly {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        textarea {
+            min-height: 200px; /* Doubled from previous 100px */
+            height: auto; /* Allow textarea to expand based on content */
+        }
+
+        .info-box {
+            background-color: #e8f4ff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .info-box a {
+            color: #004576;
+            text-decoration: none;
+        }
+
+        /* Blue bordered reference box for prioritisation matrix */
+        .priority-ref {
+            background-color: #ffffff;
+            border: 2px solid #1a73e8;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 0.75rem 0 1.25rem 0;
+            color: #0b57d0;
+        }
+
+        .priority-ref a {
+            color: #0b57d0;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .location-details {
+            background-color: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
             color: white;
-            margin-bottom: 6mm;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            min-width: 200px;
         }
-        
-        .header h1 {
-            font-size: 36pt;
-            font-weight: 700;
-            margin-bottom: 2mm;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+        .attachment-section {
+            margin-top: 1rem;
+            color: #666;
+            font-style: italic;
         }
-        
-        .header p {
-            font-size: 15pt;
-            opacity: 0.95;
+
+        .attachment-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #004576;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 0.5rem;
         }
-        
-        .emergency-strip {
+
+        /* Modal popup styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            position: relative;
             background: #e74c3c;
             color: white;
-            padding: 5mm;
+            margin: 15% auto;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 5mm;
+            width: 90%;
+            max-width: 500px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 380mm;
         }
-        
-        .emergency-strip h2 {
-            font-size: 18pt;
-            margin-bottom: 3mm;
-            text-align: center;
-        }
-        
-        .emergency-contacts {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3mm;
-            font-size: 13pt;
-        }
-        
-        .contact-box {
-            background: rgba(255,255,255,0.2);
-            padding: 3mm;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .contact-box strong {
-            display: block;
-            font-size: 15pt;
-            margin-top: 2mm;
-        }
-        
-        .content-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15mm;
-            width: 100%;
-            max-width: 380mm;
-        }
-        
-        .matrix-container {
-            width: 100%;
-        }
-        
-        .three-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6mm;
-            width: 100%;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 6mm;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card h3 {
-            font-size: 16pt;
-            color: #667eea;
-            margin-bottom: 5mm;
-            padding-bottom: 3mm;
-            border-bottom: 3px solid #667eea;
-            white-space: nowrap;
-        }
-        
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11pt;
-            margin: 6mm 0;
-        }
-        
-        .matrix-table th {
-            background: #667eea;
+
+        .close-button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
             color: white;
-            padding: 4mm;
-            font-size: 12pt;
-            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 10px;
         }
-        
-        .matrix-table td {
-            padding: 5mm 3mm;
-            text-align: center;
-            border: 1px solid #ddd;
-            font-weight: 600;
-            font-size: 11pt;
-            white-space: nowrap;
+
+        .close-button:hover {
+            opacity: 0.8;
         }
-        
-        .matrix-table .p1 { background: #ffe6e6; color: #c0392b; }
-        .matrix-table .p2 { background: #fff4e6; color: #d68910; }
-        .matrix-table .p3 { background: #e6f7ff; color: #1a73e8; }
-        .matrix-table .p4 { background: #f0f0f0; color: #666; }
-        
-        .response-times {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4mm;
-            margin-top: 6mm;
+
+        .modal-body {
+            margin-top: 20px;
         }
-        
-        .time-box {
-            text-align: center;
-            padding: 3mm;
-            border-radius: 6px;
-            font-size: 10pt;
-        }
-        
-        .time-box .priority {
+
+        .emergency-number {
+            font-size: 24px;
             font-weight: bold;
-            font-size: 14pt;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .ok-button {
             display: block;
-            margin-bottom: 2mm;
-        }
-        
-        .time-box .time {
-            font-size: 11pt;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-        
-        .time-p1 { background: #ffe6e6; color: #c0392b; }
-        .time-p2 { background: #fff4e6; color: #d68910; }
-        .time-p3 { background: #e6f7ff; color: #1a73e8; }
-        .time-p4 { background: #f0f0f0; color: #666; }
-        
-        .p1-box {
-            background: #fff5f5;
-            border-left: 6px solid #e74c3c;
-            padding: 5mm;
-            margin-bottom: 5mm;
-            border-radius: 6px;
-        }
-        
-        .p1-box h4 {
+            width: 100%;
+            padding: 10px;
+            background: white;
             color: #e74c3c;
-            font-size: 14pt;
-            margin-bottom: 3mm;
-        }
-        
-        .p1-box ul {
-            list-style: none;
-            font-size: 11pt;
-            line-height: 1.5;
-        }
-        
-        .p1-box li:before {
-            content: "▸ ";
-            color: #e74c3c;
+            border: none;
+            border-radius: 4px;
+            margin-top: 20px;
             font-weight: bold;
+            cursor: pointer;
         }
-        
-        .escalation-box {
-            background: #fff9e6;
-            border: 2px solid #f39c12;
-            border-radius: 6px;
-            padding: 5mm;
-            margin-top: 5mm;
-        }
-        
-        .escalation-box h4 {
-            color: #d68910;
-            font-size: 14pt;
-            margin-bottom: 3mm;
-        }
-        
-        .escalation-box ul {
-            font-size: 11pt;
-            line-height: 1.5;
-            padding-left: 4mm;
-        }
-        
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4mm;
-            font-size: 11pt;
-        }
-        
-        .category-item {
+
+        .ok-button:hover {
             background: #f8f9fa;
-            padding: 4mm;
-            border-radius: 6px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .category-item strong {
-            color: #667eea;
-            display: block;
-            margin-bottom: 2mm;
-            font-size: 12pt;
-        }
-        
-        .examples {
-            display: flex;
-            flex-direction: column;
-            gap: 4mm;
-        }
-        
-        .example-item {
-            padding: 4mm;
-   @         border-radius: 6px;
-            line-height: 1.4;
-            font-size: 11pt;
-        }
-        
-        .example-item strong {
-            display: inline-block;
-            min-width: 30px;
-            font-size: 12pt;
-        }
-        
-        .p1-example { background: #ffe6e6; border-left: 4px solid #e74c3c; }
-        .p2-example { background: #fff4e6; border-left: 4px solid #f39c12; }
-        .p3-example { background: #e6f7ff; border-left: 4px solid #3498db; }
-        .p4-example { background: #f0f0f0; border-left: 4px solid #95a5a6; }
-        
-        @media print {
-            body {
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
         }
     </style>
+    <script>
+        function initializeForm() {
+            const select = document.getElementById('severity_level');
+            const modal = document.getElementById('criticalModal');
+            const impactSection = document.getElementById('impact_description_section');
+            const facilitiesArea = document.getElementById('facilities_area');
+            const impactedService = document.getElementById('impacted_service');
+            const requestType = document.getElementById('request_type');
+
+            // Define the request type options for specific impacted services
+            const requestTypeOptions = {
+                'door-lock-repairs': [
+                    { value: 'door-issue', text: 'Report an issue with a door' },
+                    { value: 'lock-issue', text: 'Report an issue with a lock' }
+                ],
+                'floor-coverings': [
+                    { value: 'existing-floor', text: 'Issue with existing floor coverings' },
+                    { value: 'new-floor', text: 'Have new floor coverings installed' }
+                ]
+            };
+
+            // Define the options for each facilities area
+            const serviceOptions = {
+                'access-security': [
+                    { value: 'access-request', text: 'Access Request' },
+                    { value: 'door-locks', text: 'Door Locks, padlocks and keys' },
+                    { value: 'security-equipment', text: 'Security Equipment' },
+                    { value: 'other', text: 'Other' }
+                ],
+                'carpentry-interiors': [
+                    { value: 'door-lock-repairs', text: 'Door and Lock Repairs' },
+                    { value: 'floor-coverings', text: 'Floor Coverings' },
+                    { value: 'painting-patching', text: 'Painting and Patching' },
+                    { value: 'boards', text: 'Whiteboards and Pinboards' },
+                    { value: 'windows-fixtures', text: 'Windows, Fixtures, Blinds, and Coverings' },
+                    { value: 'other', text: 'Other' }
+                ]
+            };
+
+            // Handle facilities area change
+            facilitiesArea.addEventListener('change', function() {
+                // Clear existing options
+                impactedService.innerHTML = '<option value="">Select Impacted Service</option>';
+                
+                // Get the selected value
+                const selected = this.value;
+                
+                // If we have options for this selection
+                if (serviceOptions[selected]) {
+                    serviceOptions[selected].forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.value;
+                        optionElement.textContent = option.text;
+                        impactedService.appendChild(optionElement);
+                    });
+                }
+                // Clear request type when facilities area changes
+                requestType.innerHTML = '<option value="">Select Request Type</option>';
+            });
+
+            // Handle impacted service change
+            impactedService.addEventListener('change', function() {
+                // Clear existing options
+                requestType.innerHTML = '<option value="">Select Request Type</option>';
+                
+                // Get the selected value
+                const selected = this.value;
+                
+                // If we have specific options for this impacted service
+                if (requestTypeOptions[selected]) {
+                    requestTypeOptions[selected].forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.value;
+                        optionElement.textContent = option.text;
+                        requestType.appendChild(optionElement);
+                    });
+                }
+            });
+            
+            // Initially hide the impact description section
+            impactSection.classList.add('hidden');
+            
+            select.addEventListener('change', function() {
+                // Handle Critical selection (show modal)
+                if (this.value === '1') {
+                    modal.style.display = 'block';
+                }
+                
+                // Handle impact description visibility for High priority and Medium.
+                if (this.value === '2' || this.value === '3') { // Show for High and Medium
+                    impactSection.classList.remove('hidden');
+                    impactSection.classList.add('visible');
+                    impactSection.querySelector('textarea').required = true;
+                } else { // Hide for Critical, Medium, Low
+                    impactSection.classList.remove('visible');
+                    impactSection.classList.add('hidden');
+                    impactSection.querySelector('textarea').required = false;
+                }
+            });
+
+            // Modal close handlers
+            document.querySelector('.close-button').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            document.querySelector('.ok-button').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize after DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Facilities & Maintenance Priority Guide</h1>
-        <p>For Requesters and Business Services Team</p>
-    </div>
-    
-    <div class="emergency-strip">
-        <h2>⚠️ EMERGENCY CONTACTS ⚠️</h2>
-        <div class="emergency-contacts">
-            <div class="contact-box">
-                <div>Life-threatening Emergencies</div>
-                <strong>000</strong>
-                <div style="font-size: 13pt; margin-top: 2mm;">Then call 834 46666 / 1800 246 066</div>
+    <header class="header">
+        <img src="unimelb-logo.png" alt="University of Melbourne" class="logo">
+        <div class="nav-items">
+            <div class="search-box">
+                <input type="search" placeholder="Search..." class="search-input">
+                <span>RG</span>
             </div>
-            <div class="contact-box">
-                <div>Facilities Critical (P1)</div>
-                <strong>+61 3 8344 088</strong>
-            </div>
+            <button class="quick-access">Quick Access</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <p class="form-description">
+                Use this form to raise a ticket related to campus facilities, including maintenance, grounds, cleaning and waste, 
+                access and security, electrical, plumbing, carpentry, heating and cooling, transport
+            </p>
+
+            <form>
+                <div class="section">
+                    <h3>REQUESTED FOR</h3>
+                    <div class="form-group">
+                        <label class="required">User</label>
+                        <select required disabled class="readonly">
+                            <option value="">User logged in or specific selection</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred contact number</label>
+                        <input type="tel" class="form-input">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>REQUEST DETAILS</h3>
+                    <div class="form-group">
+                        <label class="required">Facilities area</label>
+                        <select id="facilities_area" required>
+                            <option value="">Select Facilities Area</option>
+                            <option value="access-security">Access and Security</option>
+                            <option value="carpentry-interiors">Carpentry and Interiors</option>
+                            <option value="cleaning-waste">Cleaning, Waste and Disposal</option>
+                            <option value="electrical">Electrical</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Impacted Service</label>
+                        <select id="impacted_service" required>
+                            <option value="">Select Impacted Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Select Priority</label>
+                        <select name="severity_level" id="severity_level" required>
+                            <option value="">Select Priority</option>
+                            <option value="1">1 - Critical</option>
+                            <option value="2">2 - High</option>
+                            <option value="3">3 - Medium</option>
+                            <option value="4">4 - Low</option>
+                        </select>
+                    </div>
+
+                    <div id="impact_description_section" class="form-group">
+                        <label class="required">Describe how users are affected (Impact) and how quickly a fix is needed (Urgency) — this helps us set the right priority and service lead time</label>
+                        
+                        <textarea name="impact_description" required></textarea>
+                        <div class="info-box">
+                        For details around how impact and urgency contribute towards priority, refer to <a href="https://rahulgrovermelbourne-ship-it.github.io/ServiceNow/Priority_Matrix.html">KBA - Prioritisation Matrix</a>.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Request type</label>
+                        <select id="request_type" required>
+                            <option value="">Select Request Type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Request related to</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select one of the options</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Please provide description</label>
+                        <textarea name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Specify if this is a health and safety hazard</label>
+                        <div class="info-box">
+                            Refer to the <a href="#" target="_blank">Incident and Hazard reporting</a> to check what is defined as a hazard.
+                        </div>
+                        <select disabled class="readonly">
+                            <option value="">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label>Teaching space or class affected</label>
+                        <select disabled> 
+                     <option value="">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    If you are having trouble finding your location details, login to the 
+                    <a href="#" target="_blank">Estates Portal</a> to search using detailed maps and floor plans.
+                </div>
+
+                <div class="location-details">
+                    <h3>LOCATION DETAILS</h3>
+                    <div class="form-group">
+                        <label class="required">Campus</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Campus</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Building</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Building</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Floor</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Floor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room</label>
+                        <select disabled class="readonly">
+                            <option value="">Select Room</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="attachment-section">
+                    <p>To add attachments please click on the paper clip.</p>
+                    <button type="button" class="attachment-btn">
+                        📎 Add attachments
+                    </button>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <div class="content-grid">
-        <div class="matrix-container">
-            <div class="card">
-                <h3>Priority Decision Matrix</h3>
+
+    <!-- Critical Severity Modal -->
+    <div id="criticalModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h2>⚠️ EMERGENCY CONTACTS ⚠️</h2>
+            <div class="modal-body">
+                <p><strong>For Critical Facilities and Maintenance:</strong></p>
+                <div class="emergency-number">Call 8344 0888</div>
                 
-                <table class="matrix-table">
-                    <thead>
-                        <tr>
-                            <th>Severity →<br>Urgency ↓</th>
-                            <th>Critical<br>(S1)</th>
-                            <th>High<br>(S2)</th>
-                            <th>Medium<br>(S3)</th>
-                            <th>Low<br>(S4)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Urgent</th>
-                            <td class="p1">P1 - Emergency</td>
-                            <td class="p1">P1 - Emergency</td>
-                            <td class="p2">P2 - High</td>
-                            <td class="p3">P3 - Medium</td>
-                        </tr>
-                        <tr>
-                            <th>High</th>
-                            <td class="p1">P1 - Emergency</td>
-                            <td class="p2">P2 - High</td>
-                            <td class="p2">P2 - High</td>
-                            <td class="p3">P3 - Medium</td>
-                        </tr>
-                        <tr>
-                            <th>Medium</th>
-                            <td class="p2">P2 - High</td>
-                            <td class="p2">P2 - High</td>
-                            <td class="p3">P3 - Medium</td>
-                            <td class="p4">P4 - Low</td>
-                        </tr>
-                        <tr>
-                            <th>Low</th>
-                            <td class="p2">P2 - High</td>
-                            <td class="p3">P3 - Medium</td>
-                            <td class="p4">P4 - Low</td>
-                            <td class="p4">P4 - Low</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p><strong>For Life-threatening Emergencies:</strong></p>
+                <div class="emergency-number">Call 000</div>
+                <p>Then call 8344 6666</p>
                 
-                <h4 style="color: #667eea; margin: 4mm 0 2mm 0; text-align: center; font-size: 20pt;">SLAs</h4>
-                <div class="response-times">
-                    <div class="time-box time-p1">
-                        <span class="priority">P1</span>
-                        <div class="time">Response time: 30-60 min<br>Resolution: TBD</div>
-                    </div>
-                    <div class="time-box time-p2">
-                        <span class="priority">P2</span>
-                        <div class="time">Response time: 2-4 hrs<br>Resolution: TBD</div>
-                    </div>
-                    <div class="time-box time-p3">
-                        <span class="priority">P3</span>
-                        <div class="time">Response time: TBD<br>Resolution: TBD</div>
-                    </div>
-                    <div class="time-box time-p4">
-                        <span class="priority">P4</span>
-                        <div class="time">Response time: TBD<br>Resolution: TBD</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="three-column">
-            <div class="card">
-                <h3>Priority 1</h3>
-                
-                <div class="p1-box">
-                    <h4>Life Safety Issues</h4>
-                    <ul>
-                        <li>Fire, electrical sparking, gas leak</li>
-                        <li>Person trapped (elevator/room)</li>
-                        <li>Structural collapse or danger</li>
-                        <li>Hazardous material spill</li>
-                    </ul>
-                </div>
-
-                <div class="p1-box" style="margin-top: 4mm;">
-                    <h4>Critical Facilities Issues</h4>
-                    <ul>
-                        <li>Major flooding (active)</li>
-                        <li>No water (building-wide)</li>
-                        <li>No heat (winter &lt;0°C)</li>
-                        <li>Sewage backup (occupied areas)</li>
-                        <li>Exposed electrical wiring</li>
-                        <li>Secure door won't lock (after-hours)</li>
-                        <li>Ice on main walkways</li>
-                    </ul>
-                </div>
-                
-                <div class="escalation-box">
-                    <h4>⬆️ Escalate Priority If:</h4>
-                    <ul>
-                        <li>Multiple reports of same issue</li>
-                        <li>Exam or event affected</li>
-                        <li>Issue worsening rapidly</li>
-                        <li>Accessibility barrier created</li>
-                        <li>After-hours with AM impact</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="card" style="max-height: none;">
-                <h3>Category Quick Reference</h3>
-                <div class="category-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6mm;">
-                    <div class="category-item">
-                        <strong>HVAC & Climate Control</strong>
-                        P1: No A/C in summer in lab (above 30°C)<br>
-                        P2: HVAC not working (single office, mild)<br>
-                        P3: Temperature slightly uncomfortable<br>
-                        P4: Thermostat calibration request
-                    </div>
-                    
-                    <div class="category-item">
-                        <strong>Plumbing & Water Systems</strong>
-                        P1: Pipe burst causing flooding<br>
-                        P2: Major leak affecting multiple rooms<br>
-                        P3: Single toilet clog<br>
-                        P4: Slow drain
-                    </div>
-                    
-                    <div class="category-item">
-                        <strong>Electrical & Lighting</strong>
-                        P1: Total power outage<br>
-                        P2: Lights out (stairwell/corridor)<br>
-                        P3: Single office lights out<br>
-                        P4: Single bulb replacement
-                    </div>
-                    
-                    <div class="category-item">
-                        <strong>Security & Access Control</strong>
-                        P1: Active security breach<br>
-                        P2: Office lock malfunction (hours)<br>
-                        P3: Faculty access (alternative available)<br>
-                        P4: Key duplication request
-                    </div>
-
-                    <div class="category-item">
-                        <strong>Structural & Building</strong>
-                        P1: Ceiling collapse danger<br>
-                        P2: Cracked window (no danger)<br>
-                        P3: Door closure issues<br>
-                        P4: Minor repairs/paint touch-up
-                    </div>
-
-                    <div class="category-item">
-                        <strong>Elevators & Accessibility</strong>
-                        P1: Person trapped<br>
-                        P2: One of multiple elevators down<br>
-                        P3: Minor operational issues<br>
-                        P4: Button light out
-                    </div>
-
-                    <div class="category-item">
-                        <strong>Grounds & Exterior</strong>
-                        P1: Ice on main walkways<br>
-                        P2: Trip hazards<br>
-                        P3: Minor landscaping issues<br>
-                        P4: Routine maintenance
-                    </div>
-
-                    <div class="category-item">
-                        <strong>Custodial & Sanitation</strong>
-                        P1: Hazardous/biohazard spill<br>
-                        P2: Overflowing trash (public)<br>
-                        P3: Routine cleaning issues<br>
-                        P4: Supply requests
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>Common Examples by Priority</h3>
-                <div class="examples">
-                    <div class="example-item p1-example">
-                        <strong>P1:</strong> Flooding, person trapped, no water/heat (building-wide), sewage backup, exposed wiring
-                    </div>
-                    
-                    <div class="example-item p2-example">
-                        <strong>P2:</strong> HVAC failure (classroom), toilet overflow (public), power outage (classroom), major leak, only elevator down
-                    </div>
-                    
-                    <div class="example-item p3-example">
-                        <strong>P3:</strong> HVAC failure (single office), lights out (office), toilet clog (alternatives available), door lock issue
-                    </div>
-                    
-                    <div class="example-item p4-example">
-                        <strong>P4:</strong> Light bulb replacement, key duplication, dripping faucet, paint touch-up, ceiling tile damage
-                    </div>
-                </div>
+                <button class="ok-button">OK</button>
             </div>
         </div>
     </div>
