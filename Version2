@@ -359,7 +359,7 @@
                 }
                 
                 // Handle impact description visibility for High priority and Medium.
-                if (this.value === '2' || this.value === '3') { // Show for High and Medium
+                if (this.value === '2') { // Show for High and Medium
                     impactSection.classList.remove('hidden');
                     impactSection.classList.add('visible');
                     impactSection.querySelector('textarea').required = true;
@@ -458,11 +458,10 @@
 
                     <div id="impact_description_section" class="form-group">
                         <label class="required">Describe how users are affected (Impact) and how quickly a fix is needed (Urgency) — this helps us set the right priority and service lead time</label>
-                        
-                        <textarea name="impact_description" required></textarea>
-                        <div class="info-box">
+                         <div class="info-box">
                         For details around how impact and urgency contribute towards priority, refer to <a href="https://rahulgrovermelbourne-ship-it.github.io/ServiceNow/Priority_Matrix.html">KBA - Prioritisation Matrix</a>.
                         </div>
+                        <textarea name="impact_description" required></textarea>
                     </div>
 
                     <div class="form-group">
