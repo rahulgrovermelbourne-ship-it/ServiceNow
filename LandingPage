@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melbourne Uni Tools</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      colour: #333;
+    }
+    header {
+      display: flex;
+      align-items: centre;
+      margin-bottom: 40px;
+    }
+    header img {
+      height: 80px;
+      margin-right: 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 40px;
+      colour: #0057b8;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
+    a {
+      text-decoration: none;
+      colour: #0057b8;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://brandhub.unimelb.edu.au/assets/logos/unimelb-primary-logo.png" alt="University of Melbournenal Tools</h1>
+  </header>
+
+  <section>
+    <h2>Email Notification Templates</h2>
+    <p>Use this section to manage and preview email templates used across services.</p>
+  </section>
+
+  <section>
+    <h2>Service Now</h2>
+    <ul>
+      <li><a href="https://servicenow.example.com/template1" target="_blank">Template 1</a></li>
+servicenow.example.com/template2" target="_blank">Template ore links here -->
+    </ul>
+  </section>
+
+</body>
+</html>
