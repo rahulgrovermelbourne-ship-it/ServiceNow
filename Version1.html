@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities Service Request - University of Melbourne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #004576;
+            padding: 8px;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .quick-access {
+            background: none;
+            border: 1px solid #004576;
+            color: #004576;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .visible {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+
+                textarea, select, input[type="tel"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            height: 3rem;
+            font-size: 1rem;
+        }
+
+        select:disabled,
+        select[readonly],
+        select.readonly {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        textarea {
+            min-height: 200px; /* Doubled from previous 100px */
+            height: auto; /* Allow textarea to expand based on content */
+        }
+
+        .info-box {
+            background-color: #e8f4ff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .info-box a {
+            color: #004576;
+            text-decoration: none;
+        }
+
+        /* Blue bordered reference box for prioritisation matrix */
+        .priority-ref {
+            background-color: #ffffff;
+            border: 2px solid #1a73e8;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 0.75rem 0 1.25rem 0;
+            color: #0b57d0;
+        }
+
+        .priority-ref a {
+            color: #0b57d0;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .location-details {
+            background-color: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            min-width: 200px;
+        }
+
+        .attachment-section {
+            margin-top: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .attachment-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #004576;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal popup styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            position: relative;
+            background: #e74c3c;
+            color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .close-button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 10px;
+        }
+
+        .close-button:hover {
+            opacity: 0.8;
+        }
+
+        .modal-body {
+            margin-top: 20px;
+        }
+
+        .emergency-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .ok-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: white;
+            color: #e74c3c;
+            border: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .ok-button:hover {
+            background: #f8f9fa;
+        }
+    </style>
+    <script>
+        function initializeForm() {
+            const select = document.getElementById('severity_level');
+            const modal = document.getElementById('criticalModal');
+            const impactSection = document.getElementById('impact_description_section');
+            const facilitiesArea = document.getElementById('facilities_area');
+            const impactedService = document.getElementById('impacted_service');
+            const requestType = document.getElementById('request_type');
+
+            // Define the request type options for specific impacted services
+            const requestTypeOptions = {
+                'door-lock-repairs': [
+                    { value: 'door-issue', text: 'Report an issue with a door' },
+                    { value: 'lock-issue', text: 'Report an issue with a lock' }
+                ],
+                'floor-coverings': [
+                    { value: 'existing-floor', text: 'Issue with existing floor coverings' },
+                    { value: 'new-floor', text: 'Have new floor coverings installed' }
+                ]
+            };
+
+            // Define the options for each facilities area
+            const serviceOptions = {
+                'access-security': [
+                    { value: 'access-request', text: 'Access Request' },
+                    { value: 'door-locks', text: 'Door Locks, padlocks and keys' },
+                    { value: 'security-equipment', text: 'Security Equipment' },
+                    { value: 'other', text: 'Other' }
+                ],
+                'carpentry-interiors': [
+                    { value: 'door-lock-repairs', text: 'Door and Lock Repairs' },
+                    { value: 'floor-coverings', text: 'Floor Coverings' },
+                    { value: 'painting-patching', text: 'Painting and Patching' },
+                    { value: 'boards', text: 'Whiteboards and Pinboards' },
+                    { value: 'windows-fixtures', text: 'Windows, Fixtures, Blinds, and Coverings' },
+                    { value: 'other', text: 'Other' }
+                ]
+            };
+
+            // Handle facilities area change
+            facilitiesArea.addEventListener('change', function() {
+                // Clear existing options
+                impactedService.innerHTML = '<option value="">Select Impacted Service</option>';
+                
+                // Get the selected value
+                const selected = this.value;
+                
+                // If we have options for this selection
+                if (serviceOptions[selected]) {
+                    serviceOptions[selected].forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.value;
+                        optionElement.textContent = option.text;
+                        impactedService.appendChild(optionElement);
+                    });
+                }
+                // Clear request type when facilities area changes
+                requestType.innerHTML = '<option value="">Select Request Type</option>';
+            });
+
+            // Handle impacted service change
+            impactedService.addEventListener('change', function() {
+                // Clear existing options
+                requestType.innerHTML = '<option value="">Select Request Type</option>';
+                
+                // Get the selected value
+                const selected = this.value;
+                
+                // If we have specific options for this impacted service
+                if (requestTypeOptions[selected]) {
+                    requestTypeOptions[selected].forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.value;
+                        optionElement.textContent = option.text;
+                        requestType.appendChild(optionElement);
+                    });
+                }
+            });
+            
+            // Initially hide the impact description section
+            impactSection.classList.add('hidden');
+            
+            select.addEventListener('change', function() {
+                // Handle Critical selection (show modal)
+                if (this.value === '1') {
+                    modal.style.display = 'block';
+                }
+                
+                // Handle impact description visibility for High priority and Medium.
+                if (this.value === '2' || this.value === '3') { // Show for High and Medium
+                    impactSection.classList.remove('hidden');
+                    impactSection.classList.add('visible');
+                    impactSection.querySelector('textarea').required = true;
+                } else { // Hide for Critical, Medium, Low
+                    impactSection.classList.remove('visible');
+                    impactSection.classList.add('hidden');
+                    impactSection.querySelector('textarea').required = false;
+                }
+            });
+
+            // Modal close handlers
+            document.querySelector('.close-button').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            document.querySelector('.ok-button').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize after DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <img src="unimelb-logo.png" alt="University of Melbourne" class="logo">
+        <div class="nav-items">
+            <div class="search-box">
+                <input type="search" placeholder="Search..." class="search-input">
+                <span>RG</span>
+            </div>
+            <button class="quick-access">Quick Access</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <p class="form-description">
+                Use this form to raise a ticket related to campus facilities, including maintenance, grounds, cleaning and waste, 
+                access and security, electrical, plumbing, carpentry, heating and cooling, transport
+            </p>
+
+            <form>
+                <div class="section">
+                    <h3>REQUESTED FOR</h3>
+                    <div class="form-group">
+                        <label class="required">User</label>
+                        <select required disabled class="readonly">
+                            <option value="">User logged in or specific selection</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred contact number</label>
+                        <input type="tel" class="form-input">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>REQUEST DETAILS</h3>
+                    <div class="form-group">
+                        <label class="required">Facilities area</label>
+                        <select id="facilities_area" required>
+                            <option value="">Select Facilities Area</option>
+                            <option value="access-security">Access and Security</option>
+                            <option value="carpentry-interiors">Carpentry and Interiors</option>
+                            <option value="cleaning-waste">Cleaning, Waste and Disposal</option>
+                            <option value="electrical">Electrical</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Impacted Service</label>
+                        <select id="impacted_service" required>
+                            <option value="">Select Impacted Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Select Priority</label>
+                        <select name="severity_level" id="severity_level" required>
+                            <option value="">Select Priority</option>
+                            <option value="1">1 - Critical</option>
+                            <option value="2">2 - High</option>
+                            <option value="3">3 - Medium</option>
+                            <option value="4">4 - Low</option>
+                        </select>
+                    </div>
+
+                    <div id="impact_description_section" class="form-group">
+                        <label class="required">Describe how users are affected (Impact) and how quickly a fix is needed (Urgency) — this helps us set the right priority and service lead time</label>
+                        
+                        <textarea name="impact_description" required></textarea>
+                        <div class="info-box">
+                        For details around how impact and urgency contribute towards priority, refer to <a href="https://rahulgrovermelbourne-ship-it.github.io/ServiceNow/Priority_Matrix.html">KBA - Prioritisation Matrix</a>.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Request type</label>
+                        <select id="request_type" required>
+                            <option value="">Select Request Type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Request related to</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select one of the options</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Please provide description</label>
+                        <textarea name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Specify if this is a health and safety hazard</label>
+                        <div class="info-box">
+                            Refer to the <a href="#" target="_blank">Incident and Hazard reporting</a> to check what is defined as a hazard.
+                        </div>
+                        <select disabled class="readonly">
+                            <option value="">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label>Teaching space or class affected</label>
+                        <select disabled> 
+                     <option value="">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    If you are having trouble finding your location details, login to the 
+                    <a href="#" target="_blank">Estates Portal</a> to search using detailed maps and floor plans.
+                </div>
+
+                <div class="location-details">
+                    <h3>LOCATION DETAILS</h3>
+                    <div class="form-group">
+                        <label class="required">Campus</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Campus</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Building</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Building</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Floor</label>
+                        <select required disabled class="readonly">
+                            <option value="">Select Floor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room</label>
+                        <select disabled class="readonly">
+                            <option value="">Select Room</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="attachment-section">
+                    <p>To add attachments please click on the paper clip.</p>
+                    <button type="button" class="attachment-btn">
+                        📎 Add attachments
+                    </button>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Critical Severity Modal -->
+    <div id="criticalModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h2>⚠️ EMERGENCY CONTACTS ⚠️</h2>
+            <div class="modal-body">
+                <p><strong>For Critical Facilities and Maintenance:</strong></p>
+                <div class="emergency-number">Call 8344 0888</div>
+                
+                <p><strong>For Life-threatening Emergencies:</strong></p>
+                <div class="emergency-number">Call 000</div>
+                <p>Then call 8344 6666</p>
+                
+                <button class="ok-button">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
