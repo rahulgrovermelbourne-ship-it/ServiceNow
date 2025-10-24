@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facilities Service Request - University of Melbourne</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Facilities Service Request - University of Melbourne</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -270,7 +271,7 @@
             background: #f8f9fa;
         }
     </style>
-    <script>
+<script>
         function initializeForm() {
             const select = document.getElementById('severity_level');
             const modal = document.getElementById('criticalModal');
@@ -391,181 +392,161 @@
     </script>
 </head>
 <body>
-    <header class="header">
-        <img src="unimelb-logo.png" alt="University of Melbourne" class="logo">
-        <div class="nav-items">
-            <div class="search-box">
-                <input type="search" placeholder="Search..." class="search-input">
-                <span>RG</span>
-            </div>
-            <button class="quick-access">Quick Access</button>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="form-container">
-            <p class="form-description">
+<header class="header">
+<img alt="University of Melbourne" class="logo" src="unimelb-logo.png"/>
+<div class="nav-items">
+<div class="search-box">
+<input class="search-input" placeholder="Search..." type="search"/>
+<span>RG</span>
+</div>
+<button class="quick-access">Quick Access</button>
+</div>
+</header>
+<div class="container">
+<div class="form-container">
+<p class="form-description">
                 Use this form to raise a ticket related to campus facilities, including maintenance, grounds, cleaning and waste, 
                 access and security, electrical, plumbing, carpentry, heating and cooling, transport
             </p>
+<!---Infobox with red background and with text in centre "For Critical Facilities and Maintenance: Call 8344 0888 " and in next para say "For Life-threatening Emergencies call 0 000 and then dial 8344 6666"-->
+<div class="info-box" style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; text-align: center;">
+⚠️ <strong>For Critical Facilities and Maintenance:</strong> Call 8344 0888<br/><br/>
+⚠️ <strong>For Life-threatening Emergencies:</strong> Call 0 000 and then dial 8344 6666
+</div>  
+<form>
+<div class="section">
+<h3>REQUESTED FOR</h3>
+<div class="form-group">
+<label class="required">User</label>
+<select class="readonly" disabled="" required="">
+<option value="">User logged in or specific selection</option>
+</select>
+</div>
+<div class="form-group">
+<label>Preferred contact number</label>
+<input class="form-input" type="tel"/>
+</div>
+</div>
+<div class="section">
+<h3>REQUEST DETAILS</h3>
+<div class="form-group">
+<label class="required">Facilities area</label>
+<select id="facilities_area" required="">
+<option value="">Select Facilities Area</option>
+<option value="access-security">Access and Security</option>
+<option value="carpentry-interiors">Carpentry and Interiors</option>
+</select>
+</div>
+<div class="form-group">
+<label class="required">Impacted Service</label>
+<select id="impacted_service" required="">
+<option value="">Select Impacted Service</option>
+</select>
+</div>
+<div class="form-group">
 
-            <form>
-                <div class="section">
-                    <h3>REQUESTED FOR</h3>
-                    <div class="form-group">
-                        <label class="required">User</label>
-                        <select required disabled class="readonly">
-                            <option value="">User logged in or specific selection</option>
-                        </select>
-                    </div>
 
-                    <div class="form-group">
-                        <label>Preferred contact number</label>
-                        <input type="tel" class="form-input">
-                    </div>
-                </div>
+</div>
+<div class="form-group" id="impact_description_section">
 
-                <div class="section">
-                    <h3>REQUEST DETAILS</h3>
-                    <div class="form-group">
-                        <label class="required">Facilities area</label>
-                        <select id="facilities_area" required>
-                            <option value="">Select Facilities Area</option>
-                            <option value="access-security">Access and Security</option>
-                            <option value="carpentry-interiors">Carpentry and Interiors</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Impacted Service</label>
-                        <select id="impacted_service" required>
-                            <option value="">Select Impacted Service</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Select Priority</label>
-                        <select name="severity_level" id="severity_level" required>
-                            <option value="">Select Priority</option>
-                            <option value="1">1 - Critical</option>
-                            <option value="2">2 - High</option>
-                            <option value="3">3 - Medium</option>
-                            <option value="4">4 - Low</option>
-                        </select>
-                    </div>
-
-                    <div id="impact_description_section" class="form-group">
-                        <label class="required">Describe how users are affected (Impact) and how quickly a fix is needed (Urgency) — this helps us set the right priority and service lead time</label>
-                         <div class="info-box">
+<div class="info-box">
                         For details around how impact and urgency contribute towards priority, refer to <a href="https://rahulgrovermelbourne-ship-it.github.io/ServiceNow/Priority_Matrix.html">KBA - Prioritisation Matrix</a>.
                         </div>
-                        <textarea name="impact_description" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Request type</label>
-                        <select id="request_type" required>
-                            <option value="">Select Request Type</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Request related to</label>
-                        <select required disabled class="readonly">
-                            <option value="">Select one of the options</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Please provide description</label>
-                        <textarea name="description" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Specify if this is a health and safety hazard</label>
-                        <div class="info-box">
+<textarea name="impact_description" required=""></textarea>
+</div>
+<div class="form-group">
+<label class="required">Request type</label>
+<select id="request_type" required="">
+<option value="">Select Request Type</option>
+</select>
+</div>
+<div class="form-group">
+<label class="required">Request related to</label>
+<select class="readonly" disabled="" required="">
+<option value="">Select one of the options</option>
+</select>
+</div>
+<div class="form-group">
+<label class="required">Please provide description</label>
+<div class="info-box" style="text-align: center;">
+                       Along with the description of your problem, please provide further details about the impact (e.g. how many people are affected) you're having because of the issue and the urgency of the resolution, this will help us set the right priority to your case.
+                       <p></p><p></p>For reference, please see <a href="https://rahulgrovermelbourne-ship-it.github.io/ServiceNow/Priority_Matrix.html">KBA - Prioritisation Matrix</a>.</p>
+                        </div>
+<textarea name="description" required=""></textarea>
+</div>
+<div class="form-group">
+<label>Specify if this is a health and safety hazard</label>
+<div class="info-box">
                             Refer to the <a href="#" target="_blank">Incident and Hazard reporting</a> to check what is defined as a hazard.
                         </div>
-                        <select disabled class="readonly">
-                            <option value="">No</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        
-                        <label>Teaching space or class affected</label>
-                        <select disabled> 
-                     <option value="">No</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="info-box">
+<select class="readonly" disabled="">
+<option value="">No</option>
+</select>
+</div>
+<div class="form-group">
+<label>Teaching space or class affected</label>
+<select disabled="">
+<option value="">No</option>
+</select>
+</div>
+</div>
+<div class="info-box">
                     If you are having trouble finding your location details, login to the 
                     <a href="#" target="_blank">Estates Portal</a> to search using detailed maps and floor plans.
                 </div>
-
-                <div class="location-details">
-                    <h3>LOCATION DETAILS</h3>
-                    <div class="form-group">
-                        <label class="required">Campus</label>
-                        <select required disabled class="readonly">
-                            <option value="">Select Campus</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Building</label>
-                        <select required disabled class="readonly">
-                            <option value="">Select Building</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="required">Floor</label>
-                        <select required disabled class="readonly">
-                            <option value="">Select Floor</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Room</label>
-                        <select disabled class="readonly">
-                            <option value="">Select Room</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="attachment-section">
-                    <p>To add attachments please click on the paper clip.</p>
-                    <button type="button" class="attachment-btn">
+<div class="location-details">
+<h3>LOCATION DETAILS</h3>
+<div class="form-group">
+<label class="required">Campus</label>
+<select class="readonly" disabled="" required="">
+<option value="">Select Campus</option>
+</select>
+</div>
+<div class="form-group">
+<label class="required">Building</label>
+<select class="readonly" disabled="" required="">
+<option value="">Select Building</option>
+</select>
+</div>
+<div class="form-group">
+<label class="required">Floor</label>
+<select class="readonly" disabled="" required="">
+<option value="">Select Floor</option>
+</select>
+</div>
+<div class="form-group">
+<label>Room</label>
+<select class="readonly" disabled="">
+<option value="">Select Room</option>
+</select>
+</div>
+</div>
+<div class="attachment-section">
+<p>To add attachments please click on the paper clip.</p>
+<button class="attachment-btn" type="button">
                         📎 Add attachments
                     </button>
-                </div>
-
-                <div class="submit-container">
-                    <button type="submit" class="submit-btn">SUBMIT</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Critical Severity Modal -->
-    <div id="criticalModal" class="modal">
-        <div class="modal-content">
-            <button class="close-button">&times;</button>
-            <h2>⚠️ EMERGENCY CONTACTS ⚠️</h2>
-            <div class="modal-body">
-                <p><strong>For Critical Facilities and Maintenance:</strong></p>
-                <div class="emergency-number">Call 8344 0888</div>
-                
-                <p><strong>For Life-threatening Emergencies:</strong></p>
-                <div class="emergency-number">Call 0 000</div>
-                <p>Then call 8344 6666</p>
-                
-                <button class="ok-button">OK</button>
-            </div>
-        </div>
-    </div>
+</div>
+<div class="submit-container">
+<button class="submit-btn" type="submit">SUBMIT</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Critical Severity Modal -->
+<div class="modal" id="criticalModal">
+<div class="modal-content">
+<button class="close-button">×</button>
+<h2>⚠️ EMERGENCY CONTACTS ⚠️</h2>
+<div class="modal-body">
+<p><strong>For Critical Facilities and Maintenance:</strong></p>
+<div class="emergency-number">Call 8344 0888</div>
+<p><strong>For Life-threatening Emergencies:</strong></p>
+<div class="emergency-number">Call 000</div>
+<p>Then call 8344 6666</p>
+<button class="ok-button">OK</button>
+</div>
+</div>
+</div>
 </body>
 </html>
